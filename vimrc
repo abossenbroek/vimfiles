@@ -53,7 +53,9 @@ Plugin 'xolox/vim-misc'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'Shougo/neomru.vim'
 Plugin 'sudar/vim-arduino-syntax'
+if has("lua")
 Plugin 'Shougo/neocomplete.vim'
+endif
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -193,8 +195,13 @@ set history=100		" keep 100 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
-set tags+=~/.vim/systags
-set backupdir=~/.backup,~/tmp
+if os == 'Mac'
+  set tags+=~/.vim/systags
+  set backupdir=~/.backup,~/tmp
+elseif os == 'Win32'
+  set tags+=~/vimfiles/systags
+  set backupdir=~/vimfiles/backup
+endif
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
