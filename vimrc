@@ -11,6 +11,7 @@ if has("win32") || has("win16")
   set guifont=Sauce_Code_Powerline:h12
   set rtp+=~\vimfiles\bundle\Vundle.vim
   let vundlepath='~/vimfiles/bundle'
+  let os = 'Win32'
 elseif has("gui_macvim")
   let os = 'Mac'
   set guifont=Sauce\ Code\ Powerline\ Light:h14
