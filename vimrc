@@ -34,7 +34,6 @@ endif
 call vundle#begin(vundlepath)
 
 " let Vundle manage Vundle, required
-Plugin 'airblade/vim-gitgutter'
 Plugin 'matchit.zip'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
@@ -56,6 +55,7 @@ Plugin 'sudar/vim-arduino-syntax'
 if has("lua")
 Plugin 'Shougo/neocomplete.vim'
 endif
+Plugin 'mhinz/vim-signify'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -74,14 +74,32 @@ set shiftwidth=2
 set tw=79
 
 " Settings for airline {{{
-let g:airline#extensions#tabline#enabled = 1
-set laststatus=2
-if has("gui_running")
-  let g:airline_powerline_fonts = 1
-  if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+if exists(':AirlineToggle')
+  let g:airline#extensions#tabline#enabled = 1
+  set laststatus=2
+  if has("gui_running")
+    let g:airline_powerline_fonts = 1
+    if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+    endif
+    let g:airline_symbols.space = "\ua0"
   endif
-  let g:airline_symbols.space = "\ua0"
+endif
+" }}}
+
+" Settings for signify {{{
+if exists(":SignifyToggle")
+  if os == 'Mac'
+    let g:signify_vcs_list = [ 'git', 'hg' ]
+  elseif os == 'Win32'
+    let g:signify_vcs_list = [ 'git' ]
+  endif
+  highlight SignifySignAdd    ctermfg=22 guifg=#005f00 guibg=#4CAD32 gui=bold
+  highlight SignifySignDelete ctermfg=88 guifg=#870000 guibg=#E71A0B gui=bold
+  highlight SignifySignChange ctermfg=130 guifg=#af5f00 guibg=#C93570 gui=bold
+  highlight SignColumn  guibg=#242424
+  let g:signify_disable_by_default = 0
+  nnoremap <leader>gr SignifyRefresh
 endif
 " }}}
 
@@ -89,18 +107,20 @@ set autoindent
 set number
 
 " Settings for syntastic {{{
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+if exists(':SyntasticInfo')
+  set statusline+=%#warningmsg#
+  set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" Configuration for lintr {{{
-let g:syntastic_enable_r_lintr_checker = 1
-let g:syntastic_r_checkers = 1
-" }}}
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+  " Configuration for lintr {{{
+  let g:syntastic_enable_r_lintr_checker = 1
+  let g:syntastic_r_checkers = 1
+  " }}}
+endif
 " }}}
 
 
@@ -114,76 +134,81 @@ nnoremap <space> za
 
 " Short-cuts {{{
 " NERD-tree {{{
-map <C-n> :NERDTreeToggle<CR>
+if exists(":NERDTreeToggle")
+  map <C-n> :NERDTreeToggle<CR>
+endif
 " }}}
 " ctrl-p {{{
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
+if exists(":CtrlP")
+  let g:ctrlp_map = '<c-p>'
+  let g:ctrlp_cmd = 'CtrlP'
+endif
 " }}}
 " }}}
 
 " Settings for neocomplete {{{
 " Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+if exists(':NeoCompleteEnable')
+  let g:acp_enableAtStartup = 0
+  " Use neocomplete.
+  let g:neocomplete#enable_at_startup = 1
+  " Use smartcase.
+  let g:neocomplete#enable_smart_case = 1
+  " Set minimum syntax keyword length.
+  let g:neocomplete#sources#syntax#min_keyword_length = 3
+  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
+  " Define dictionary.
+  let g:neocomplete#sources#dictionary#dictionaries = {
+        \ 'default' : '',
+        \ 'vimshell' : $HOME.'/.vimshell_hist',
+        \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
 
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
+  " Define keyword.
+  if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+  " Plugin key-mappings.
+  inoremap <expr><C-g>     neocomplete#undo_completion()
+  inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+  " Recommended key-mappings.
+  " <CR>: close popup and save indent.
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function()
+    return neocomplete#close_popup() . "\<CR>"
+    " For no inserting <CR> key.
+    "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+  endfunction
+  " <TAB>: completion.
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  " <C-h>, <BS>: close popup and delete backword char.
+  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><C-y>  neocomplete#close_popup()
+  inoremap <expr><C-e>  neocomplete#cancel_popup()
+  " Close popup by <Space>.
+  "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+  " Enable omni completion.
+  "autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+  " Enable heavy omni completion.
+  if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+  endif
+  "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+  "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+  "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplete#close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-" Enable omni completion.
-"autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
 " }}}
 
 
@@ -295,6 +320,12 @@ if has("autocmd")
 
 else
 endif " has("autocmd")
+
+" Settings for indent-guides {{{
+if exists(':IndentGuidesToggle')
+  :IndentGuidesToggle
+endif
+" }}}
 
 " vim:foldmethod=marker:foldlevel=0:
 
