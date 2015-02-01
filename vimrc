@@ -56,6 +56,7 @@ if has("lua")
 Plugin 'Shougo/neocomplete.vim'
 endif
 Plugin 'mhinz/vim-signify'
+Plugin 'luochen1990/rainbow'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -324,6 +325,12 @@ endif " has("autocmd")
 " Settings for indent-guides {{{
 if exists(':IndentGuidesToggle')
   :IndentGuidesToggle
+endif
+" }}}
+
+" Settings for rainbow {{{
+if exists(':RainbowToggle')
+   let g:rainbow_active = 1
 endif
 " }}}
 
