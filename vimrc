@@ -40,7 +40,8 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'vim-latex/vim-latex'
+"Plugin 'vim-latex/vim-latex'
+Plugin 'coot/atp_vim'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/syntastic'
@@ -56,7 +57,8 @@ if has("lua")
 Plugin 'Shougo/neocomplete.vim'
 endif
 Plugin 'mhinz/vim-signify'
-Plugin 'luochen1990/rainbow'
+Plugin 'oblitum/rainbow'
+Plugin 'Align'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -235,8 +237,11 @@ if &t_Co > 2 || has("gui_running")
 	syntax on
 	set background=dark
 	set hlsearch
+  colorscheme wombat256
 endif
-colorscheme wombat256
+if !has("gui_running")
+  colorscheme wombat
+endif
 set t_Co=256
 
 if has("gui_running")
@@ -329,9 +334,8 @@ endif
 " }}}
 
 " Settings for rainbow {{{
-if exists(':RainbowToggle')
-   let g:rainbow_active = 1
-endif
+"if exists(':RainbowToggle')
+let g:rainbow_active = 1
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0:
