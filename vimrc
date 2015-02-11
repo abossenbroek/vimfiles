@@ -121,7 +121,7 @@ if exists(':SyntasticInfo')
   let g:syntastic_check_on_wq = 0
   " Configuration for lintr {{{
   let g:syntastic_enable_r_lintr_checker = 1
-  let g:syntastic_r_checkers = 1
+  let g:syntastic_r_checkers = ['lintr']
   " }}}
 endif
 " }}}
@@ -129,7 +129,7 @@ endif
 
 " Folding {{{
 set foldenable          
-set foldlevelstart=10   " open most folds by default
+set foldlevelstart=15   " open most folds by default
 set foldmethod=indent
 " space open/closes folds
 nnoremap <space> za
