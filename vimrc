@@ -90,6 +90,12 @@ if exists(':AirlineToggle')
 endif
 " }}}
 
+" Settings for fugitive {{{
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gc :Gcommit<cr>
+" }}}
+
+
 " Settings for signify {{{
 if exists(":SignifyToggle")
   if os == 'Mac'
@@ -122,6 +128,7 @@ if exists(':SyntasticInfo')
   " Configuration for lintr {{{
   let g:syntastic_enable_r_lintr_checker = 1
   let g:syntastic_r_checkers = ['lintr']
+  let g:syntastic_loc_list_height=5
   " }}}
 endif
 " }}}
@@ -319,6 +326,23 @@ if has("autocmd")
 		let g:DoxygenToolkit_licenseTag="My own license\<enter>"
 		let g:DoxygenToolkit_commentType = "C++" 
 	augroup END
+
+
+  highlight ExtraWhitespace ctermbg=red guibg=red
+  match ExtraWhitespace /\s\+$/
+  autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+  autocmd BufWinLeave * call clearmatches()
+
+  " Remove trailing whitespace
+  function! TrimWhiteSpace()
+    let l = line(".")
+    let c = line(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+  endfunction
+  autocmd BufWritePre     *.R,*.Rmd,DESCRIPTION,NAMESPACE :call TrimWhiteSpace()
 
 	nnoremap ,l mayiw`a:exe "!dict -d moby-thes - $(echo " . @" . "\| recode latin1..utf-8)"<CR>
 	nnoremap ,n mayiw`a:exe "!dict -d nld-eng  $(echo " . @" . "\| recode latin1..utf-8)"<CR>
