@@ -342,7 +342,7 @@ if has("autocmd")
     %s/\s\+$//e
     call cursor(l, c)
   endfunction
-  autocmd BufWritePre     *.R,*.Rmd,DESCRIPTION,NAMESPACE :call TrimWhiteSpace()
+  autocmd BufWritePre     *.R,*.Rmd,DESCRIPTION,NAMESPACE,*.c,*.h,*.cpp,*.hpp :call TrimWhiteSpace()
 
 	nnoremap ,l mayiw`a:exe "!dict -d moby-thes - $(echo " . @" . "\| recode latin1..utf-8)"<CR>
 	nnoremap ,n mayiw`a:exe "!dict -d nld-eng  $(echo " . @" . "\| recode latin1..utf-8)"<CR>
