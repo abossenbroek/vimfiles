@@ -6,7 +6,7 @@ set encoding=utf-16
 " adjust configuration for such hostile environment as Windows {{{
 if has("win32") || has("win16")
   let vimrplugin_i386 = 0
-  let vimrplugin_r_path = "c:\\R\\R-3.1.2\\bin\\x64"
+  let vimrplugin_r_path = "C:\\RRO\\R-3.1.2\\bin\\x64"
   source $VIMRUNTIME/mswin.vim
   set guifont=Sauce_Code_Powerline:h12
   set rtp+=~\vimfiles\bundle\Vundle.vim
@@ -59,6 +59,7 @@ endif
 Plugin 'mhinz/vim-signify'
 Plugin 'oblitum/rainbow'
 Plugin 'Align'
+Plugin 'klen/python-mode'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
