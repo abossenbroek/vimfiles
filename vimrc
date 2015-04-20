@@ -21,7 +21,7 @@ else
     let os = 'Mac'
   endif
 endif
-if os == 'Mac'
+if os == 'Mac' || os == 'Linux'
 " set the runtime path to include Vundle 
   set rtp+=~/.vim/bundle/Vundle.vim
   let vundlepath='~/.vim/bundle'
