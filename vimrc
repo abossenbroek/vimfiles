@@ -99,7 +99,7 @@ nnoremap <leader>gc :Gcommit<cr>
 
 " Settings for signify {{{
 if exists(":SignifyToggle")
-  if os == 'Mac'
+  if os == 'Mac' || os == 'Linux'
     let g:signify_vcs_list = [ 'git', 'hg' ]
   elseif os == 'Win32'
     let g:signify_vcs_list = [ 'git' ]
@@ -231,7 +231,7 @@ set history=100		" keep 100 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
-if os == 'Mac'
+if os == 'Mac' || os == 'Linux'
   set tags+=~/.vim/systags
   set backupdir=~/.backup,~/tmp
 elseif os == 'Win32'
