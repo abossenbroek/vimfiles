@@ -6,7 +6,9 @@ set encoding=utf-16
 " adjust configuration for such hostile environment as Windows {{{
 if has("win32") || has("win16")
   let vimrplugin_i386 = 0
-  let vimrplugin_r_path = "C:\\RRO\\R-3.1.2\\bin\\x64"
+  let vimrplugin_r_path = "C:\\RRO\\R-3.2.0\\bin\\x64"
+  let vimrplugin_r_args = "--sdi --no-save --quiet --internet2"
+  let vimrplugin_latexcmd = 'xelatex'
   source $VIMRUNTIME/mswin.vim
   set guifont=Sauce_Code_Powerline:h12
   set rtp+=~\vimfiles\bundle\Vundle.vim
@@ -22,7 +24,7 @@ else
   endif
 endif
 if os == 'Mac'
-" set the runtime path to include Vundle 
+" set the runtime path to include Vundle
   set rtp+=~/.vim/bundle/Vundle.vim
   let vundlepath='~/.vim/bundle'
 endif
@@ -41,8 +43,8 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
 "Plugin 'vim-latex/vim-latex'
-Plugin 'coot/atp_vim'
-Plugin 'bling/vim-airline'
+"Plugin 'coot/atp_vim'
+"Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/syntastic'
 Plugin 'jcfaria/Vim-R-plugin'
@@ -60,6 +62,11 @@ Plugin 'mhinz/vim-signify'
 Plugin 'oblitum/rainbow'
 Plugin 'Align'
 Plugin 'klen/python-mode'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plugin 'vim-pandoc/vim-rmarkdown'
+Plugin 'cakebaker/scss-syntax.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -67,6 +74,8 @@ call vundle#end()            " required
 
 filetype plugin indent on    " required
 syn on
+syn match texInputFile      "\\\(epsfig\|input\|usepackage\|rinline\|lstinline\)\s*\(\[.*\]\)\={.\{-}}"      contains=texStatement,texInputCurlies,texInputFileOpt
+syn match rnoweb      "\\\(epsfig\|input\|usepackage\|rinline\|lstinline\)\s*\(\[.*\]\)\={.\{-}}"      contains=texStatement,texInputCurlies,texInputFileOpt
 set hidden
 
 " Tab settings {{{
@@ -95,7 +104,6 @@ endif
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gc :Gcommit<cr>
 " }}}
-
 
 " Settings for signify {{{
 if exists(":SignifyToggle")
@@ -343,7 +351,7 @@ if has("autocmd")
     %s/\s\+$//e
     call cursor(l, c)
   endfunction
-  autocmd BufWritePre     *.R,*.Rmd,DESCRIPTION,NAMESPACE :call TrimWhiteSpace()
+  autocmd BufWritePre     *.R,*.Rmd,DESCRIPTION,NAMESPACE,*.Rnw,*.tex,*.sty :call TrimWhiteSpace()
 
 	nnoremap ,l mayiw`a:exe "!dict -d moby-thes - $(echo " . @" . "\| recode latin1..utf-8)"<CR>
 	nnoremap ,n mayiw`a:exe "!dict -d nld-eng  $(echo " . @" . "\| recode latin1..utf-8)"<CR>
