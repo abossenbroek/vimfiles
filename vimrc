@@ -23,8 +23,9 @@ else
     let os = 'Mac'
   endif
 endif
-if os == 'Mac'
-" set the runtime path to include Vundle
+
+if os == 'Mac' || os == 'Linux'
+" set the runtime path to include Vundle 
   set rtp+=~/.vim/bundle/Vundle.vim
   let vundlepath='~/.vim/bundle'
 endif
@@ -107,7 +108,7 @@ nnoremap <leader>gc :Gcommit<cr>
 
 " Settings for signify {{{
 if exists(":SignifyToggle")
-  if os == 'Mac'
+  if os == 'Mac' || os == 'Linux'
     let g:signify_vcs_list = [ 'git', 'hg' ]
   elseif os == 'Win32'
     let g:signify_vcs_list = [ 'git' ]
@@ -239,7 +240,7 @@ set history=100		" keep 100 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
-if os == 'Mac'
+if os == 'Mac' || os == 'Linux'
   set tags+=~/.vim/systags
   set backupdir=~/.backup,~/tmp
 elseif os == 'Win32'
@@ -351,7 +352,7 @@ if has("autocmd")
     %s/\s\+$//e
     call cursor(l, c)
   endfunction
-  autocmd BufWritePre     *.R,*.Rmd,DESCRIPTION,NAMESPACE,*.Rnw,*.tex,*.sty :call TrimWhiteSpace()
+  autocmd BufWritePre     *.R,*.Rmd,DESCRIPTION,NAMESPACE,*.Rnw,*.tex,*.sty,*.c,*.h,*.cpp,*.hpp :call TrimWhiteSpace()
 
 	nnoremap ,l mayiw`a:exe "!dict -d moby-thes - $(echo " . @" . "\| recode latin1..utf-8)"<CR>
 	nnoremap ,n mayiw`a:exe "!dict -d nld-eng  $(echo " . @" . "\| recode latin1..utf-8)"<CR>
