@@ -3,33 +3,34 @@ filetype off                  " required
 
 set encoding=utf-16
 
-" adjust configuration for such hostile environment as Windows {{{
+" adjust configuration for such hostile environment as windows {{{
 if has("win32") || has("win16")
   let vimrplugin_i386 = 0
-  let vimrplugin_r_path = "C:\\RRO\\R-3.2.0\\bin\\x64"
+  let vimrplugin_r_path = "c:\\rro\\r-3.2.2\\bin\\x64"
   let vimrplugin_r_args = "--sdi --no-save --quiet --internet2"
   let vimrplugin_latexcmd = 'xelatex'
-  source $VIMRUNTIME/mswin.vim
-  set guifont=Sauce_Code_Powerline:h12
-  set rtp+=~\vimfiles\bundle\Vundle.vim
+  source $vimruntime/mswin.vim
+  set guifont=sauce_code_powerline:h12
+  set rtp+=~\vimfiles\bundle\vundle.vim
   let vundlepath='~/vimfiles/bundle'
-  let os = 'Win32'
+  let os = 'win32'
 elseif has("gui_macvim")
-  let os = 'Mac'
-  set guifont=Sauce\ Code\ Powerline\ Light:h14
+  let os = 'mac'
+  set guifont=sauce\ code\ powerline\ light:h14
 else
   let os=substitute(system('uname'), '\n', '', '')
-  if os == 'Darwin' || os == 'Mac'
-    let os = 'Mac'
+  if os == 'darwin' || os == 'mac'
+    let os = 'mac'
   endif
 endif
 
-if os == 'Mac' || os == 'Linux'
-" set the runtime path to include Vundle 
-  set rtp+=~/.vim/bundle/Vundle.vim
+if os == 'mac' || os == 'linux'
+" set the runtime path to include vundle 
+  set rtp+=~/.vim/bundle/vundle.vim
   let vundlepath='~/.vim/bundle'
 endif
 " }}}
+"
 
 
 " Vundle setup {{{
@@ -48,7 +49,8 @@ Plugin 'flazz/vim-colorschemes'
 "Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/syntastic'
-Plugin 'jcfaria/Vim-R-plugin'
+Plugin 'vim-scripts/Vim-R-plugin'
+Plugin 'jalvesaq/r-vim-runtime'
 Plugin 'mllg/vim-devtools-plugin'
 Plugin 'tpope/vim-sensible'
 Plugin 'nathanaelkane/vim-indent-guides'
