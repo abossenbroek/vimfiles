@@ -3,30 +3,34 @@ filetype off                  " required
 
 set encoding=utf-16
 
-" adjust configuration for such hostile environment as Windows {{{
+" adjust configuration for such hostile environment as windows {{{
 if has("win32") || has("win16")
   let vimrplugin_i386 = 0
-  let vimrplugin_r_path = "C:\\RRO\\R-3.1.2\\bin\\x64"
-  source $VIMRUNTIME/mswin.vim
-  set guifont=Sauce_Code_Powerline:h12
-  set rtp+=~\vimfiles\bundle\Vundle.vim
+  let vimrplugin_r_path = "c:\\rro\\r-3.2.2\\bin\\x64"
+  let vimrplugin_r_args = "--sdi --no-save --quiet --internet2"
+  let vimrplugin_latexcmd = 'xelatex'
+  source $vimruntime/mswin.vim
+  set guifont=sauce_code_powerline:h12
+  set rtp+=~\vimfiles\bundle\vundle.vim
   let vundlepath='~/vimfiles/bundle'
-  let os = 'Win32'
+  let os = 'win32'
 elseif has("gui_macvim")
-  let os = 'Mac'
-  set guifont=Sauce\ Code\ Powerline\ Light:h14
+  let os = 'mac'
+  set guifont=sauce\ code\ powerline\ light:h14
 else
   let os=substitute(system('uname'), '\n', '', '')
-  if os == 'Darwin' || os == 'Mac'
-    let os = 'Mac'
+  if os == 'darwin' || os == 'mac'
+    let os = 'mac'
   endif
 endif
-if os == 'Mac'
-" set the runtime path to include Vundle 
-  set rtp+=~/.vim/bundle/Vundle.vim
+
+if os == 'mac' || os == 'linux'
+" set the runtime path to include vundle 
+  set rtp+=~/.vim/bundle/vundle.vim
   let vundlepath='~/.vim/bundle'
 endif
 " }}}
+"
 
 
 " Vundle setup {{{
@@ -41,11 +45,12 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
 "Plugin 'vim-latex/vim-latex'
-Plugin 'coot/atp_vim'
-Plugin 'bling/vim-airline'
+"Plugin 'coot/atp_vim'
+"Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/syntastic'
-Plugin 'jcfaria/Vim-R-plugin'
+Plugin 'vim-scripts/Vim-R-plugin'
+Plugin 'jalvesaq/r-vim-runtime'
 Plugin 'mllg/vim-devtools-plugin'
 Plugin 'tpope/vim-sensible'
 Plugin 'nathanaelkane/vim-indent-guides'
@@ -61,6 +66,11 @@ Plugin 'oblitum/rainbow'
 Plugin 'Align'
 Plugin 'klen/python-mode'
 Plugin 'ivanov/vim-ipython'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plugin 'vim-pandoc/vim-rmarkdown'
+Plugin 'cakebaker/scss-syntax.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -68,6 +78,8 @@ call vundle#end()            " required
 
 filetype plugin indent on    " required
 syn on
+syn match texInputFile      "\\\(epsfig\|input\|usepackage\|rinline\|lstinline\)\s*\(\[.*\]\)\={.\{-}}"      contains=texStatement,texInputCurlies,texInputFileOpt
+syn match rnoweb      "\\\(epsfig\|input\|usepackage\|rinline\|lstinline\)\s*\(\[.*\]\)\={.\{-}}"      contains=texStatement,texInputCurlies,texInputFileOpt
 set hidden
 
 " Tab settings {{{
@@ -97,10 +109,9 @@ nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gc :Gcommit<cr>
 " }}}
 
-
 " Settings for signify {{{
 if exists(":SignifyToggle")
-  if os == 'Mac'
+  if os == 'Mac' || os == 'Linux'
     let g:signify_vcs_list = [ 'git', 'hg' ]
   elseif os == 'Win32'
     let g:signify_vcs_list = [ 'git' ]
@@ -232,7 +243,7 @@ set history=100		" keep 100 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
-if os == 'Mac'
+if os == 'Mac' || os == 'Linux'
   set tags+=~/.vim/systags
   set backupdir=~/.backup,~/tmp
 elseif os == 'Win32'
@@ -344,7 +355,7 @@ if has("autocmd")
     %s/\s\+$//e
     call cursor(l, c)
   endfunction
-  autocmd BufWritePre     *.R,*.Rmd,DESCRIPTION,NAMESPACE,*.c,*.h,*.cpp,*.hpp :call TrimWhiteSpace()
+  autocmd BufWritePre     *.R,*.Rmd,DESCRIPTION,NAMESPACE,*.Rnw,*.tex,*.sty,*.c,*.h,*.cpp,*.hpp :call TrimWhiteSpace()
 
 	nnoremap ,l mayiw`a:exe "!dict -d moby-thes - $(echo " . @" . "\| recode latin1..utf-8)"<CR>
 	nnoremap ,n mayiw`a:exe "!dict -d nld-eng  $(echo " . @" . "\| recode latin1..utf-8)"<CR>
