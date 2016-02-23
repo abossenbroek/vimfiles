@@ -60,6 +60,7 @@ Plugin 'mhinz/vim-signify'
 Plugin 'oblitum/rainbow'
 Plugin 'Align'
 Plugin 'klen/python-mode'
+Plugin 'ivanov/vim-ipython'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
