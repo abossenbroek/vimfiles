@@ -123,8 +123,8 @@ endif
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gc :Gcommit<cr>
 nnoremap <leader>gw :Gwrite<cr>
-nnoremap <leader>Gh :Gpush<cr>
-nnoremap <leader>Gl :Gpull<cr>
+nnoremap <leader>gh :Gpush<cr>
+nnoremap <leader>gl :Gpull<cr>
 " }}}
 
 " Settings for signify {{{
