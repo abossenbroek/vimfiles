@@ -11,8 +11,8 @@ if has("win32") || has("win16")
   let vimrplugin_latexcmd = 'xelatex'
   source $vimruntime/mswin.vim
   set guifont=sauce_code_powerline:h12
-  set rtp+=~\vimfiles\bundle\vundle.vim
-  let vundlepath='~/vimfiles/bundle'
+  set rtp+=~\vimfiles\bundle\neobundle.vim
+  let neobundlepath='~\vimfiles\bundle\'
   let os = 'win32'
 elseif has("gui_macvim")
   let os = 'mac'
@@ -26,53 +26,69 @@ endif
 
 if os == 'mac' || os == 'linux'
 " set the runtime path to include vundle 
-  set rtp+=~/.vim/bundle/vundle.vim
-  let vundlepath='~/.vim/bundle'
+  set rtp+=~/.vim/bundle/neobundle.vim/
+  let neobundlepath='~/.vim/bundle'
 endif
 " }}}
 "
 
 
-" Vundle setup {{{
+" Neobundle setup {{{
 " initialize Vundle
-call vundle#begin(vundlepath)
+call neobundle#begin(neobundlepath)
 
-" let Vundle manage Vundle, required
-Plugin 'matchit.zip'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'gmarik/Vundle.vim'
-Plugin 'flazz/vim-colorschemes'
-"Plugin 'vim-latex/vim-latex'
-"Plugin 'coot/atp_vim'
-"Plugin 'bling/vim-airline'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/syntastic'
-Plugin 'vim-scripts/Vim-R-plugin'
-Plugin 'jalvesaq/r-vim-runtime'
-Plugin 'mllg/vim-devtools-plugin'
-Plugin 'tpope/vim-sensible'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'xolox/vim-misc'
-Plugin 'Shougo/vimshell.vim'
-Plugin 'Shougo/neomru.vim'
-Plugin 'sudar/vim-arduino-syntax'
-if has("lua")
-Plugin 'Shougo/neocomplete.vim'
-endif
-Plugin 'mhinz/vim-signify'
-Plugin 'oblitum/rainbow'
-Plugin 'Align'
-Plugin 'klen/python-mode'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-Plugin 'vim-pandoc/vim-rmarkdown'
-Plugin 'cakebaker/scss-syntax.vim'
+  NeoBundleFetch 'Shougo/neobundle.vim'
+
+NeoBundle 'Shougo/vimproc.vim', {
+      \ 'build' : {
+      \     'windows' : 'tools\\update-dll-mingw',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make',
+      \     'linux' : 'make',
+      \     'unix' : 'gmake',
+      \    },
+      \ }
+
+  NeoBundle 'matchit.zip'
+  NeoBundle 'scrooloose/nerdtree'
+  NeoBundle 'scrooloose/nerdcommenter'
+  NeoBundle 'ctrlpvim/ctrlp.vim'
+  NeoBundle 'flazz/vim-colorschemes'
+  "NeoBundle 'vim-latex/vim-latex'
+  "NeoBundle 'coot/atp_vim'
+  NeoBundle 'airblade/vim-gitgutter'
+  NeoBundle 'bling/vim-airline'
+  NeoBundle 'tpope/vim-fugitive'
+  NeoBundle 'scrooloose/syntastic'
+  NeoBundle 'vim-scripts/Vim-R-plugin'
+  NeoBundle 'jalvesaq/r-vim-runtime'
+  NeoBundleLazy 'mllg/vim-devtools-plugin',
+        \ {'autoload' : {'filetypes' : ['r','rmd','rnoweb']}}
+  NeoBundle 'tpope/vim-sensible'
+  NeoBundle 'nathanaelkane/vim-indent-guides'
+  NeoBundle 'xolox/vim-misc'
+  NeoBundle 'Shougo/vimshell.vim'
+  NeoBundle 'Shougo/neomru.vim'
+  NeoBundle 'sudar/vim-arduino-syntax'
+  if has("lua")
+    NeoBundle 'Shougo/neocomplete.vim'
+  endif
+  NeoBundle 'mhinz/vim-signify'
+  NeoBundle 'oblitum/rainbow'
+  NeoBundle 'Align'
+  NeoBundle 'klen/python-mode'
+  NeoBundleLazy 'derekwyatt/vim-scala', 
+        \ {'autoload':{'filetypes':['scala']}}
+  NeoBundleLazy 'vim-pandoc/vim-pandoc'
+  NeoBundle 'vim-pandoc/vim-pandoc-syntax' 
+  NeoBundle 'vim-pandoc/vim-rmarkdown' 
+  NeoBundle 'cakebaker/scss-syntax.vim'
+  NeoBundle 'idanarye/vim-merginal'
+  
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+call neobundle#end()  " required
+NeoBundleCheck
 " }}}
 
 filetype plugin indent on    " required
@@ -106,6 +122,9 @@ endif
 " Settings for fugitive {{{
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gw :Gwrite<cr>
+nnoremap <leader>Gh :Gpush<cr>
+nnoremap <leader>Gl :Gpull<cr>
 " }}}
 
 " Settings for signify {{{
@@ -130,6 +149,7 @@ set number
 " Settings for syntastic {{{
 if exists(':SyntasticInfo')
   set statusline+=%#warningmsg#
+  set statusline+=%{fugitive#statusline()}
   set statusline+=%{SyntasticStatuslineFlag()}
   set statusline+=%*
 
@@ -373,7 +393,6 @@ endif
 "if exists(':RainbowToggle')
 let g:rainbow_active = 1
 " }}}
-
 " vim:foldmethod=marker:foldlevel=0:
 
 
