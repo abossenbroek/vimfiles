@@ -5,10 +5,11 @@ set encoding=utf-16
 
 " adjust configuration for such hostile environment as windows {{{
 if has("win32") || has("win16")
-  let vimrplugin_i386 = 0
-  let vimrplugin_r_path = "c:\\rro\\r-3.2.2\\bin\\x64"
-  let vimrplugin_r_args = "--sdi --no-save --quiet --internet2"
-  let vimrplugin_latexcmd = 'xelatex'
+  let R_path = "c:\\rro\\r-3.2.3\\bin\\x64"
+  let R_args = ['--sdi',  '--no-save',  '--quiet',  '--internet2']
+  let R_latexcmd = 'xelatex'
+  let R_start_libs = "base,stats,graphics,grDevices,utils,methods"
+  let R_show_args = 1
   source $vimruntime/mswin.vim
   set guifont=sauce_code_powerline:h12
   set rtp+=~\vimfiles\bundle\neobundle.vim
@@ -60,8 +61,10 @@ NeoBundle 'Shougo/vimproc.vim', {
   NeoBundle 'bling/vim-airline'
   NeoBundle 'tpope/vim-fugitive'
   NeoBundle 'scrooloose/syntastic'
-  NeoBundle 'vim-scripts/Vim-R-plugin'
-  NeoBundle 'jalvesaq/r-vim-runtime'
+  "NeoBundle 'vim-scripts/Vim-R-plugin'
+  "NeoBundle 'jalvesaq/r-vim-runtime'
+  NeoBundle 'jalvesaq/Nvim-R'
+
   NeoBundleLazy 'mllg/vim-devtools-plugin',
         \ {'autoload' : {'filetypes' : ['r','rmd','rnoweb']}}
   NeoBundle 'tpope/vim-sensible'
