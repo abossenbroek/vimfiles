@@ -88,7 +88,6 @@ NeoBundle 'Shougo/vimproc.vim', {
   NeoBundle 'cakebaker/scss-syntax.vim'
   NeoBundle 'idanarye/vim-merginal'
   
-
 " All of your Plugins must be added before the following line
 call neobundle#end()  " required
 NeoBundleCheck
