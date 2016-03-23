@@ -25,7 +25,7 @@ else
   endif
 endif
 
-if os == 'mac' || os == 'linux'
+if os == 'mac' || os == 'linux' || os == 'Linux'
 " set the runtime path to include vundle 
   set rtp+=~/.vim/bundle/neobundle.vim/
   let neobundlepath='~/.vim/bundle'
@@ -53,7 +53,7 @@ NeoBundle 'Shougo/vimproc.vim', {
   NeoBundle 'matchit.zip'
   NeoBundle 'scrooloose/nerdtree'
   NeoBundle 'scrooloose/nerdcommenter'
-  NeoBundle 'ctrlpvim/ctrlp.vim'
+  "  NeoBundle 'ctrlpvim/ctrlp.vim'
   NeoBundle 'flazz/vim-colorschemes'
   "NeoBundle 'vim-latex/vim-latex'
   "NeoBundle 'coot/atp_vim'
@@ -63,16 +63,14 @@ NeoBundle 'Shougo/vimproc.vim', {
   NeoBundle 'scrooloose/syntastic'
   "NeoBundle 'vim-scripts/Vim-R-plugin'
   "NeoBundle 'jalvesaq/r-vim-runtime'
-  NeoBundle 'jalvesaq/Nvim-R'
-
+  NeoBundleLazy 'jalvesaq/Nvim-R',
+        \ {'autoload' : {'filetypes' : ['r','rmd','rnoweb']}}
   NeoBundleLazy 'mllg/vim-devtools-plugin',
         \ {'autoload' : {'filetypes' : ['r','rmd','rnoweb']}}
   NeoBundle 'tpope/vim-sensible'
-  NeoBundle 'nathanaelkane/vim-indent-guides'
   NeoBundle 'xolox/vim-misc'
   NeoBundle 'Shougo/vimshell.vim'
   NeoBundle 'Shougo/neomru.vim'
-  NeoBundle 'sudar/vim-arduino-syntax'
   if has("lua")
     NeoBundle 'Shougo/neocomplete.vim'
   endif
@@ -87,6 +85,8 @@ NeoBundle 'Shougo/vimproc.vim', {
   NeoBundle 'vim-pandoc/vim-rmarkdown' 
   NeoBundle 'cakebaker/scss-syntax.vim'
   NeoBundle 'idanarye/vim-merginal'
+
+  NeoBundle 'Konfekt/FastFold'
   
 " All of your Plugins must be added before the following line
 call neobundle#end()  " required
@@ -338,7 +338,7 @@ set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
 if os == 'Mac' || os == 'Linux'
   set tags+=~/.vim/systags
-  set backupdir=~/.backup,~/tmp
+  set backupdir=~/.vim/backup,~/tmp
 elseif os == 'Win32'
   set tags+=~/vimfiles/systags
   set backupdir=~/vimfiles/backup
