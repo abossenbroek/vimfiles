@@ -17,8 +17,8 @@ if has("win32") || has("win16")
   let neobundlepath='~\vimfiles\bundle\'
   let os = 'win32'
 elseif has("gui_macvim")
-  let R_path = '/usr/local/bin/r'
-  let R_args = ['--sdi',  '--no-save',  '--quiet',  '--internet2']
+  let R_path = '/usr/local/bin/'
+  let R_args = ['--no-save',  '--quiet']
   let R_latexcmd = 'xelatex'
   let R_start_libs = "base,stats,graphics,grDevices,utils,methods"
   let R_show_args = 1
@@ -32,7 +32,7 @@ else
 endif
 
 if os == 'mac' || os == 'linux' || os == 'Linux'
-" set the runtime path to include vundle 
+" set the runtime path to include vundle
   set rtp+=~/.vim/bundle/neobundle.vim/
   let neobundlepath='~/.vim/bundle'
 endif
@@ -46,20 +46,25 @@ call neobundle#begin(neobundlepath)
 
   NeoBundleFetch 'Shougo/neobundle.vim'
 
-NeoBundle 'Shougo/vimproc.vim', {
-      \ 'build' : {
-      \     'windows' : 'tools\\update-dll-mingw',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make',
-      \     'linux' : 'make',
-      \     'unix' : 'gmake',
-      \    },
-      \ }
+  NeoBundle 'Shougo/vimproc.vim', {
+        \ 'build' : {
+        \     'windows' : 'tools\\update-dll-mingw',
+        \     'cygwin' : 'make -f make_cygwin.mak',
+        \     'mac' : 'make',
+        \     'linux' : 'make',
+        \     'unix' : 'gmake',
+        \    },
+        \ }
+
+  NeoBundleLazy 'chase/vim-ansible-yaml',
+    \ {'autoload': {'filetypes' : ['yml']}}
+  NeoBundle 'sheerun/vim-polyglot'
 
   NeoBundle 'matchit.zip'
   NeoBundle 'scrooloose/nerdtree'
   NeoBundle 'scrooloose/nerdcommenter'
-  "  NeoBundle 'ctrlpvim/ctrlp.vim'
+  NeoBundle 'ntpeters/vim-better-whitespace'
+  "NeoBundle 'ctrlpvim/ctrlp.vim'
   NeoBundle 'flazz/vim-colorschemes'
   "NeoBundle 'vim-latex/vim-latex'
   "NeoBundle 'coot/atp_vim'
@@ -71,6 +76,8 @@ NeoBundle 'Shougo/vimproc.vim', {
         \ {'autoload' : {'filetypes' : ['r','rmd','rnoweb']}}
   NeoBundleLazy 'mllg/vim-devtools-plugin',
         \ {'autoload' : {'filetypes' : ['r','rmd','rnoweb']}}
+  NeoBundleLazy 'nlknguyen/vim-maven-syntax',
+        \ {'autoload' : {'filetype' : ['xml.maven']}}
   NeoBundle 'tpope/vim-sensible'
   NeoBundle 'xolox/vim-misc'
   NeoBundle 'Shougo/vimshell.vim'
@@ -84,10 +91,6 @@ NeoBundle 'Shougo/vimproc.vim', {
   NeoBundleLazy 'klen/python-mode',  {
       \ 'autoload': {
       \   'filetypes': ['python']
-      \ }}
-  NeoBundleLazy 'derekwyatt/vim-scala', {
-      \ 'autoload': {
-      \   'filetypes': ['scala']
       \ }}
   NeoBundleLazy 'vim-pandoc/vim-pandoc', {
       \ 'autoload': {
@@ -105,7 +108,7 @@ NeoBundle 'Shougo/vimproc.vim', {
   NeoBundle 'idanarye/vim-merginal'
 
   NeoBundle 'Konfekt/FastFold'
-  
+
 " All of your Plugins must be added before the following line
 call neobundle#end()  " required
 NeoBundleCheck
@@ -148,7 +151,7 @@ nnoremap <leader>gl :Gpull<cr>
 " }}}
 
 " Settings for Neocomplete {{{
-if exists(":NeoCompleteEnable") 
+if exists(":NeoCompleteEnable")
   "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
   " Disable AutoComplPop.
   let g:acp_enableAtStartup = 0
@@ -259,7 +262,7 @@ endif
 
 
 " Folding {{{
-set foldenable          
+set foldenable
 set foldlevelstart=15   " open most folds by default
 set foldmethod=indent
 " space open/closes folds
@@ -378,15 +381,15 @@ set t_Co=256
 if has("gui_running")
   " Turn off useless toolbar
   set guioptions-=T
-  " Turn off menu bar 
+  " Turn off menu bar
   set guioptions-=m
-  " Turn off right-hand scroll-bar 
+  " Turn off right-hand scroll-bar
   set guioptions-=r
-  " Turn off left-hand scroll-bar 
+  " Turn off left-hand scroll-bar
   set guioptions-=l
-  " Turn off bottom scroll-bar 
+  " Turn off bottom scroll-bar
   set guioptions-=b
-  " Turn off bottom scroll-bar 
+  " Turn off bottom scroll-bar
   set guioptions-=L
 endif
 
@@ -407,8 +410,8 @@ if has("autocmd")
 		autocmd FileType tex setlocal textwidth=78
 		autocmd FileType tex nmap <C-O> :!open %:r.pdf <CR>
 		autocmd FileType c nmap <C-M> :!gcc -o %:r -ansi -Wall -Wextra -pedantic -w -Werror -g -O3 % <CR>
-		autocmd FileType java set makeprg=ant\ -emacs 
-		autocmd FileType java set efm=%f:%l:%v:%*\\d:%*\\d:%*\\s%m,%f:%l:%m,%A%*\\d.\ %t%.%#\ in\ %f,%C\ (at\ line\ %l),%-C\ %.%#,%Z%m 
+		autocmd FileType java set makeprg=ant\ -emacs
+		autocmd FileType java set efm=%f:%l:%v:%*\\d:%*\\d:%*\\s%m,%f:%l:%m,%A%*\\d.\ %t%.%#\ in\ %f,%C\ (at\ line\ %l),%-C\ %.%#,%Z%m
 		:nmap <C-S-N> :setlocal spell spelllang=nl <CR>
 		:nmap <C-S-E> :setlocal spell spelllang=en <CR>
 		:nmap <C-S-F> :setlocal spell spelllang=fr <CR>
@@ -422,7 +425,7 @@ if has("autocmd")
       let g:tex_flavor="tex"
       let g:Tex_GotoError=0
       set grepprg=grep\ -nH\ $*
-      let vimrplugin_term = "/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal"	
+      let vimrplugin_term = "/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal"
       let vimrplugin_term = "/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal"
     endif
 		let rrst_syn_hl_chunk = 1
@@ -439,7 +442,7 @@ if has("autocmd")
 		" Because most .m files I open are matlab and not objective-c
 		"autocmd FileType objc set filetype=matlab
 
-		au BufNewFile,BufRead *.doxygen setfiletype doxygen 
+		au BufNewFile,BufRead *.doxygen setfiletype doxygen
 
 		let g:DoxygenToolkit_briefTag_pre=""
 		let g:DoxygenToolkit_paramTag_pre="@param "
@@ -448,7 +451,7 @@ if has("autocmd")
 		let g:DoxygenToolkit_blockFooter=""
 		let g:DoxygenToolkit_authorName="Anton Bossenbroek"
 		let g:DoxygenToolkit_licenseTag="My own license\<enter>"
-		let g:DoxygenToolkit_commentType = "C++" 
+		let g:DoxygenToolkit_commentType = "C++"
 	augroup END
 
 
@@ -460,13 +463,7 @@ if has("autocmd")
   autocmd BufWinLeave * call clearmatches()
 
   " Remove trailing whitespace
-  function! TrimWhiteSpace()
-    let l = line(".")
-    let c = line(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-  endfunction
-  autocmd BufWritePre     *.R,*.Rmd,DESCRIPTION,NAMESPACE,*.Rnw,*.tex,*.sty,*.c,*.h,*.cpp,*.hpp :call TrimWhiteSpace()
+  autocmd BufWritePre *.Rmd,DESCRIPTION,NAMESPACE,*.Rnw,*.tex,*.sty,*.c,*.h,*.cpp,*.hpp,*.sc :StripWhitespace
 
 	nnoremap ,l mayiw`a:exe "!dict -d moby-thes - $(echo " . @" . "\| recode latin1..utf-8)"<CR>
 	nnoremap ,n mayiw`a:exe "!dict -d nld-eng  $(echo " . @" . "\| recode latin1..utf-8)"<CR>
@@ -475,12 +472,16 @@ if has("autocmd")
 else
 endif " has("autocmd")
 
+
+
 " Settings for indent-guides {{{
 if exists(':IndentGuidesToggle')
   :IndentGuidesToggle
 endif
 " }}}
 
+if exists(':SortScalaImports')
+endif
 " Settings for rainbow {{{
 "if exists(':RainbowToggle')
 let g:rainbow_active = 1
