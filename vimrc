@@ -60,6 +60,7 @@ call neobundle#begin(neobundlepath)
     \ {'autoload': {'filetypes' : ['yml']}}
   NeoBundle 'sheerun/vim-polyglot'
 
+  NeoBundle 'editorconfig/editorconfig-vim'
   NeoBundle 'matchit.zip'
   NeoBundle 'scrooloose/nerdtree'
   NeoBundle 'scrooloose/nerdcommenter'
