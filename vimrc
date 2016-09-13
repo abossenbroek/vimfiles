@@ -64,10 +64,10 @@ call neobundle#begin(neobundlepath)
   NeoBundle 'scrooloose/nerdtree'
   NeoBundle 'scrooloose/nerdcommenter'
   NeoBundle 'ntpeters/vim-better-whitespace'
-  "NeoBundle 'ctrlpvim/ctrlp.vim'
+  NeoBundle 'ctrlpvim/ctrlp.vim'
   NeoBundle 'flazz/vim-colorschemes'
-  "NeoBundle 'vim-latex/vim-latex'
-  "NeoBundle 'coot/atp_vim'
+  NeoBundle 'vim-latex/vim-latex'
+  NeoBundle 'coot/atp_vim'
   NeoBundle 'airblade/vim-gitgutter'
   NeoBundle 'bling/vim-airline'
   NeoBundle 'tpope/vim-fugitive'
@@ -104,6 +104,14 @@ call neobundle#begin(neobundlepath)
       \ 'autoload': {
       \   'filetypes': ['rmd', 'rnoweb', 'markdown'],
       \ }}
+  NeoBundleLazy 'JamshedVesuna/vim-markdown-preview', {
+     \ 'autoload': {
+     \    'filetypes': ['markdown'],
+     \ }}
+
+  NeoBundle 'c.vim'
+  NeoBundle 'octol/vim-cpp-enhanced-highlight'
+
   NeoBundle 'cakebaker/scss-syntax.vim'
   NeoBundle 'idanarye/vim-merginal'
 
@@ -472,7 +480,8 @@ if has("autocmd")
 else
 endif " has("autocmd")
 
-
+let vim_markdown_preview_github=1
+let vim_markdown_preview_hotkey='<C-m>'
 
 " Settings for indent-guides {{{
 if exists(':IndentGuidesToggle')
