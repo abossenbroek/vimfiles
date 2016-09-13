@@ -64,7 +64,7 @@ call neobundle#begin(neobundlepath)
   NeoBundle 'scrooloose/nerdtree'
   NeoBundle 'scrooloose/nerdcommenter'
   NeoBundle 'ntpeters/vim-better-whitespace'
-  NeoBundle 'ctrlpvim/ctrlp.vim'
+  "NeoBundle 'ctrlpvim/ctrlp.vim'
   NeoBundle 'flazz/vim-colorschemes'
   NeoBundle 'vim-latex/vim-latex'
   NeoBundle 'coot/atp_vim'
@@ -82,9 +82,10 @@ call neobundle#begin(neobundlepath)
   NeoBundle 'xolox/vim-misc'
   NeoBundle 'Shougo/vimshell.vim'
   NeoBundle 'Shougo/neomru.vim'
-  if has("lua")
-    NeoBundle 'Shougo/neocomplete.vim'
-  endif
+  "if has("lua")
+  "  NeoBundle 'Shougo/neocomplete.vim'
+  "endif
+  NeoBundle 'Valloric/YouCompleteMe'
   NeoBundle 'mhinz/vim-signify'
   NeoBundle 'oblitum/rainbow'
   NeoBundle 'Align'
@@ -156,6 +157,12 @@ nnoremap <leader>gc :Gcommit<cr>
 nnoremap <leader>gw :Gwrite<cr>
 nnoremap <leader>gh :Gpush<cr>
 nnoremap <leader>gl :Gpull<cr>
+" }}}
+
+" Settings for YouCompleteMe {{{
+"if exists(":YcmDiags")
+  let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+"endif
 " }}}
 
 " Settings for Neocomplete {{{
