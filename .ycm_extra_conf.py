@@ -6,21 +6,6 @@ import ycm_core
 import re
 from subprocess import call
 
-RHOME = call(["R", "RHOME"])
-RHOME_INCLUDE = "-I" + RHOME + "/include"
-RCPP_INCLUDE = \
-    call(["Rscript"], \
-         [("-e 'paste0(system.file(package = \"Rcpp\"), \"/include\")'  "
-           "| awk -F'\"' '$$0=$$2'")])
-BH_INCLUDE = \
-    call(["Rscript"], \
-         [("-e 'paste0(system.file(package = \"BH\"), \"/include\")'  "
-           "| awk -F'\"' '$$0=$$2'")])
-TESTTHAT_INCLUDE = \
-    call(["Rscript"], \
-         [("-e 'paste0(system.file(package = \"testthat\"), \"/include\")'  "
-           "| awk -F'\"' '$$0=$$2'")])
-
 BASE_FLAGS = [
     '-Wall',
     '-Wextra',
@@ -33,11 +18,7 @@ BASE_FLAGS = [
     '-std=c++11',
     '-xc++',
     '-I/usr/lib/',
-    '-I/usr/include/',
-    RHOME_INCLUDE,
-    RCPP_INCLUDE,
-    BH_INCLUDE,
-    TESTTHAT_INCLUDE
+    '-I/usr/include/'
 ]
 
 SOURCE_EXTENSIONS = [
