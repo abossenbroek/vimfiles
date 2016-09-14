@@ -56,6 +56,7 @@ call neobundle#begin(neobundlepath)
         \    },
         \ }
 
+  NeoBundle 'mh21/errormarker.vim'
   NeoBundleLazy 'chase/vim-ansible-yaml',
     \ {'autoload': {'filetypes' : ['yml']}}
   NeoBundle 'sheerun/vim-polyglot'
@@ -73,6 +74,7 @@ call neobundle#begin(neobundlepath)
   NeoBundle 'bling/vim-airline'
   NeoBundle 'tpope/vim-fugitive'
   NeoBundle 'scrooloose/syntastic'
+  NeoBundle 'airblade/vim-rooter'
   NeoBundleLazy 'jalvesaq/Nvim-R',
         \ {'autoload' : {'filetypes' : ['r','rmd','rnoweb']}}
   NeoBundleLazy 'mllg/vim-devtools-plugin',
@@ -503,6 +505,10 @@ endif
 "if exists(':RainbowToggle')
 let g:rainbow_active = 1
 " }}}
+
+"TODO comment
+let g:rooter_patterns = ['configure.ac', '.git/', 'DESCRIPTION', '.Rproj.user']
+
 " vim:foldmethod=marker:foldlevel=0:
 
 
