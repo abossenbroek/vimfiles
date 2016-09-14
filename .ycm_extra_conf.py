@@ -4,6 +4,22 @@ import fnmatch
 import logging
 import ycm_core
 import re
+from subprocess import call
+
+RHOME = call(["R", "RHOME"])
+RHOME_INCLUDE = "-I" + RHOME + "/include"
+RCPP_INCLUDE = \
+    call(["Rscript"], \
+         [("-e 'paste0(system.file(package = \"Rcpp\"), \"/include\")'  "
+           "| awk -F'\"' '$$0=$$2'")])
+BH_INCLUDE = \
+    call(["Rscript"], \
+         [("-e 'paste0(system.file(package = \"BH\"), \"/include\")'  "
+           "| awk -F'\"' '$$0=$$2'")])
+TESTTHAT_INCLUDE = \
+    call(["Rscript"], \
+         [("-e 'paste0(system.file(package = \"testthat\"), \"/include\")'  "
+           "| awk -F'\"' '$$0=$$2'")])
 
 BASE_FLAGS = [
     '-Wall',
@@ -18,8 +34,10 @@ BASE_FLAGS = [
     '-xc++',
     '-I/usr/lib/',
     '-I/usr/include/',
-    '-I/usr/local/Cellar/r/3.3.1_2/R.framework/Resources/include/',
-    '-I/usr/local/Cellar/r/3.3.1_2/R.framework/Resources/include/Rcpp.h'
+    RHOME_INCLUDE,
+    RCPP_INCLUDE,
+    BH_INCLUDE,
+    TESTTHAT_INCLUDE
 ]
 
 SOURCE_EXTENSIONS = [
