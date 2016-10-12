@@ -4,7 +4,6 @@ import fnmatch
 import logging
 import ycm_core
 import re
-from subprocess import call
 
 BASE_FLAGS = [
     '-Wall',
