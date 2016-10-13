@@ -25,7 +25,6 @@ elseif has("gui_macvim")
   let R_show_args = 1
   let os = 'mac'
   set guifont=sauce\ code\ powerline\ light:h14
-  let deinpath='~/.vim/'
 else
   let os=substitute(system('uname'), '\n', '', '')
   if os == 'darwin' || os == 'mac'
@@ -35,6 +34,7 @@ endif
 
 if os == 'mac' || os == 'linux' || os == 'Linux'
 " set the runtime path to include vundle
+  let deinpath='~/.vim/'
   set rtp+=~/.vim/repos/github.com/Shougo/dein.vim
 endif
 " }}}
