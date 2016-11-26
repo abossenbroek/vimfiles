@@ -60,6 +60,7 @@ call dein#add('Shougo/neosnippet-snippets')
   call dein#add('jeetsukumaran/vim-buffergator')
   call dein#add('sjl/gundo.vim')
   call dein#add('tpope/vim-dispatch')
+  call dein#add('michalbachowski/vim-wombat256mod')
 
   call dein#add('miyakogi/sidepanel.vim',
         \ {'hook_add': "
@@ -111,6 +112,7 @@ call dein#add('Shougo/neosnippet-snippets')
   call dein#add('vim-pandoc/vim-pandoc-syntax')
   call dein#add('vim-pandoc/vim-rmarkdown')
   call dein#add('JamshedVesuna/vim-markdown-preview')
+  call dein#add('lambdalisue/vim-pyenv')
 
   call dein#add('c.vim')
   call dein#add('octol/vim-cpp-enhanced-highlight')
