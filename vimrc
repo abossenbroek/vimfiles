@@ -1,4 +1,4 @@
-
+﻿
 
 "dein Scripts-----------------------------
 if &compatible
@@ -7,7 +7,7 @@ endif
 
 " adjust configuration for such hostile environment as windows {{{
 if has("win32") || has("win16")
-  let R_path = "c:\\rro\\r-3.2.3\\bin\\x64"
+  let R_path = "c:\\program files\\r\\r-3.4.0\\bin\\x64"
   let R_args = ['--sdi',  '--no-save',  '--quiet',  '--internet2']
   let R_latexcmd = 'xelatex'
   let R_start_libs = "base,stats,graphics,grDevices,utils,methods"
@@ -43,23 +43,28 @@ endif
 " Required:
 call dein#begin(deinpath)
 
-" Let dein manage dein
-" Required:
-call dein#add('Shougo/dein.vim')
+  " Let dein manage dein
+  " Required:
+  call dein#add('Shougo/dein.vim')
 
-" Add or remove your plugins here:
-call dein#add('Shougo/neosnippet.vim')
-call dein#add('Shougo/neosnippet-snippets')
+  " Add or remove your plugins here:
+  call dein#add('Shougo/vimproc.vim', {
+    \ 'build': {
+    \     'windows': 'tools\\update-dll-mingw',
+    \     'cygwin': 'make -f make_cygwin.mak',
+    \     'mac': 'make -f make_mac.mak',
+    \     'linux': 'make',
+    \     'unix': 'gmake',
+    \    },
+    \ })
 
-
-  call dein#add('jeaye/color_coded')
-  call dein#add('rdnetto/YCM-Generator')
-  call dein#add('Shougo/vimproc.vim')
+  call dein#add('jeaye/color_coded',
+        \ {'on_ft' : ['c', 'cpp', 'h', 'hpp']})
   call dein#add('rbtnn/rabbit-ui.vim')
-  call dein#add('majutsushi/tagbar')
-  call dein#add('jeetsukumaran/vim-buffergator')
-  call dein#add('sjl/gundo.vim')
-  call dein#add('tpope/vim-dispatch')
+  call dein#add('majutsushi/tagbar', 
+        \ {'on_ft' : ['c', 'cpp', 'h', 'hpp']})
+  call dein#add('tpope/vim-dispatch',
+        \ {'on_ft' : ['c', 'cpp', 'h', 'hpp', 'py']})
   call dein#add('michalbachowski/vim-wombat256mod')
 
   call dein#add('miyakogi/sidepanel.vim',
@@ -69,58 +74,67 @@ call dein#add('Shougo/neosnippet-snippets')
         \   let g:sidepanel_config['nerdtree'] = {}\n
         \   let g:sidepanel_config['tagbar'] = {}\n
         \   let g:sidepanel_config['buffergator'] = {}\n
-        \   let g:sidepanel_config['gundo'] = {}\n
         \ "})
 
-  call dein#add('xolox/vim-easytags')
   call dein#add('mh21/errormarker.vim')
-  call dein#add('chase/vim-ansible-yaml')
+  call dein#add('chase/vim-ansible-yaml',
+        \ {'on_ft': ['yaml']})
   call dein#add('sheerun/vim-polyglot')
 
   call dein#add('tpope/vim-unimpaired')
-  call dein#add('tpope/vim-repeat')
-  call dein#add('tpope/vim-commentary')
+  call dein#add('tpope/vim-repeat',
+        \{'on_i': 1})
+  call dein#add('tpope/vim-commentary',
+        \{'on_i': 1})
 
-  call dein#add('editorconfig/editorconfig-vim')
-  call dein#add('matchit.zip')
+  "call dein#add('editorconfig/editorconfig-vim')
+  "call dein#add('matchit.zip')
   call dein#add('scrooloose/nerdtree')
-  call dein#add('scrooloose/nerdcommenter')
+  "call dein#add('scrooloose/nerdcommenter')
   call dein#add('ntpeters/vim-better-whitespace')
   "call dein#add('ctrlpvim/ctrlp.vim')
-  call dein#add('michalbachowski/vim-wombat256mod')
-  call dein#add('coot/atp_vim')
+  call dein#add('coot/atp_vim',
+        \ {'on_ft': ['tex']})
   call dein#add('airblade/vim-gitgutter')
   call dein#add('bling/vim-airline')
   call dein#add('tpope/vim-fugitive')
-  "call dein#add('scrooloose/syntastic')
-  "call dein#add('airblade/vim-rooter')
-  call dein#add('dbakker/vim-projectroot')
-  call dein#add('jalvesaq/Nvim-R')
-  "call dein#add('mllg/vim-devtools-plugin')
-  call dein#add('pgdouyon/vim-accio')
-  call dein#add('nlknguyen/vim-maven-syntax')
+  call dein#add('scrooloose/syntastic',
+        \ {'on_ft': ['R', 'cpp', 'py', 'java', 'h', 'hpp', 'c']})
+  call dein#add('jalvesaq/Nvim-R',
+        \ {'on_ft': ['r', 'rmd', 'rnoweb']} )
+  call dein#add('mllg/vim-devtools-plugin',
+        \ {'on_ft': ['r', 'rmd', 'rnoweb']} )
+  call dein#add('pgdouyon/vim-accio',
+        \ {'on_ft': ['c', 'cpp', 'java']} )
+  call dein#add('nlknguyen/vim-maven-syntax',
+        \ {'on_ft': ['xml']} )
   call dein#add('tpope/vim-sensible')
-  call dein#add('xolox/vim-misc')
-  call dein#add('Shougo/vimshell.vim')
   call dein#add('Shougo/neomru.vim')
-  call dein#add('Valloric/YouCompleteMe')
   call dein#add('mhinz/vim-signify')
   call dein#add('luochen1990/rainbow')
-  call dein#add('Align')
-  call dein#add('klen/python-mode')
+  call dein#add('klen/python-mode',
+        \ {'on_ft': ['py']} )
   call dein#add('vim-pandoc/vim-pandoc')
   call dein#add('vim-pandoc/vim-pandoc-syntax')
-  call dein#add('vim-pandoc/vim-rmarkdown')
-  call dein#add('JamshedVesuna/vim-markdown-preview')
-  call dein#add('lambdalisue/vim-pyenv')
+  call dein#add('vim-pandoc/vim-rmarkdown',
+        \ {'on_ft': ['Rmd']} )
+  call dein#add('JamshedVesuna/vim-markdown-preview',
+        \ {'on_ft': ['Rmd', 'md']} )
+  " lazy load on insert mode
+  call dein#add('Shougo/deoplete.nvim',
+        \{'on_i': 1})
 
-  call dein#add('c.vim')
-  call dein#add('octol/vim-cpp-enhanced-highlight')
+  call dein#add('justmao945/vim-clang',
+      \{'on_ft': ['c', 'cpp']})
+  call dein#add('vim-scripts/c.vim',
+        \ {'on_ft': ['c', 'cpp', 'h', 'hpp']} )
+  call dein#add('octol/vim-cpp-enhanced-highlight',
+        \ {'on_ft': ['c', 'cpp', 'h', 'hpp']} )
 
   call dein#add('cakebaker/scss-syntax.vim')
   call dein#add('idanarye/vim-merginal')
 
-  call dein#add('Konfekt/FastFold')
+  "call dein#add('Konfekt/FastFold')
 
 
 " Required:
@@ -179,30 +193,6 @@ nnoremap <leader>gh :Gpush<cr>
 nnoremap <leader>gl :Gpull<cr>
 " }}}
 
-" Settings for YouCompleteMe {{{
-"if exists(":YcmDiags")
-  let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-  let g:ycm_echo_current_diagnostic = 1
-"endif
-" }}}
-
-
-" Settings for signify {{{
-if exists(":SignifyToggle")
-  if os == 'Mac' || os == 'Linux'
-    let g:signify_vcs_list = [ 'git', 'hg' ]
-  elseif os == 'Win32'
-    let g:signify_vcs_list = [ 'git' ]
-  endif
-  highlight SignifySignAdd    ctermfg=22 guifg=#005f00 guibg=#4CAD32 gui=bold
-  highlight SignifySignDelete ctermfg=88 guifg=#870000 guibg=#E71A0B gui=bold
-  highlight SignifySignChange ctermfg=130 guifg=#af5f00 guibg=#C93570 gui=bold
-  highlight SignColumn  guibg=#242424
-  let g:signify_disable_by_default = 0
-  nnoremap <leader>gr SignifyRefresh
-endif
-" }}}
-
 set autoindent
 set number
 
@@ -240,77 +230,6 @@ if exists(":NERDTreeToggle")
   map <C-n> :NERDTreeToggle<CR>
 endif
 " }}}
-" ctrl-p {{{
-if exists(":CtrlP")
-  let g:ctrlp_map = '<c-p>'
-  let g:ctrlp_cmd = 'CtrlP'
-endif
-" }}}
-" }}}
-
-" Settings for neocomplete {{{
-" Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-if exists(':NeoCompleteEnable')
-  let g:acp_enableAtStartup = 0
-  " Use neocomplete.
-  let g:neocomplete#enable_at_startup = 1
-  " Use smartcase.
-  let g:neocomplete#enable_smart_case = 1
-  " Set minimum syntax keyword length.
-  let g:neocomplete#sources#syntax#min_keyword_length = 3
-  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-  " Define dictionary.
-  let g:neocomplete#sources#dictionary#dictionaries = {
-        \ 'default' : '',
-        \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-  " Define keyword.
-  if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-  endif
-  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-  " Plugin key-mappings.
-  inoremap <expr><C-g>     neocomplete#undo_completion()
-  inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-  " Recommended key-mappings.
-  " <CR>: close popup and save indent.
-  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-  function! s:my_cr_function()
-    return neocomplete#close_popup() . "\<CR>"
-    " For no inserting <CR> key.
-    "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-  endfunction
-  " <TAB>: completion.
-  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-  " <C-h>, <BS>: close popup and delete backword char.
-  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-  inoremap <expr><C-y>  neocomplete#close_popup()
-  inoremap <expr><C-e>  neocomplete#cancel_popup()
-  " Close popup by <Space>.
-  "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-  " Enable omni completion.
-  "autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-  " Enable heavy omni completion.
-  if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-  endif
-  "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-  "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-  "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-endif
 " }}}
 
 
