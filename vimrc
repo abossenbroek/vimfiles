@@ -65,7 +65,6 @@ call dein#begin(deinpath)
         \ {'on_ft' : ['c', 'cpp', 'h', 'hpp']})
   call dein#add('tpope/vim-dispatch',
         \ {'on_ft' : ['c', 'cpp', 'h', 'hpp', 'py']})
-  call dein#add('michalbachowski/vim-wombat256mod')
 
   call dein#add('miyakogi/sidepanel.vim',
         \ {'hook_add': "
@@ -133,6 +132,7 @@ call dein#begin(deinpath)
 
   call dein#add('cakebaker/scss-syntax.vim')
   call dein#add('idanarye/vim-merginal')
+  call dein#add('crusoexia/vim-monokai')
 
   "call dein#add('Konfekt/FastFold')
 
@@ -252,15 +252,13 @@ endif
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
-	syntax on
 	set background=dark
 	set hlsearch
-  colorscheme wombat256mod
+  colorscheme monokai
+elseif !has("gui_running")
+	syntax on
+  colorscheme elflord
 endif
-if !has("gui_running")
-  colorscheme wombat256mod
-endif
-set t_Co=256
 
 if has("gui_running")
   " Turn off useless toolbar
