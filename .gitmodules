@@ -1,4 +1,4 @@
 
 [submodule "repos/github.com/dein.vim"]
-	path = repos/github.com/dein.vim
+	path = repos/github.com/Shougo/dein.vim
 	url = https://github.com/Shougo/dein.vim
