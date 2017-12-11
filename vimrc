@@ -13,7 +13,7 @@ if has("win32") || has("win16")
   let R_start_libs = "base,stats,graphics,grDevices,utils,methods"
   let R_show_args = 1
   source $vimruntime/mswin.vim
-  set guifont=sauce_code_powerline:h12
+  set guifont=Source_Code_Pro_Medium:h12
   set rtp+=~\vimfiles\repos\github.com\Shougo\dein.vim
   let deinpath='~\vimfiles\'
   let os = 'win32'
@@ -133,6 +133,8 @@ call dein#begin(deinpath)
   call dein#add('cakebaker/scss-syntax.vim')
   call dein#add('idanarye/vim-merginal')
   call dein#add('crusoexia/vim-monokai')
+  call dein#add('hashivim/vim-terraform',
+        \ {'on_ft': ['tf', 'tf.json']} )
 
   "call dein#add('Konfekt/FastFold')
 
