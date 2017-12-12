@@ -58,6 +58,7 @@ call dein#begin(deinpath)
     \    },
     \ })
 
+  call dein#add('Chiel92/vim-autoformat')
   call dein#add('jeaye/color_coded',
         \ {'on_ft' : ['c', 'cpp', 'h', 'hpp']})
   call dein#add('rbtnn/rabbit-ui.vim')
