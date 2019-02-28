@@ -1,28 +1,18 @@
-﻿
-
-"dein Scripts-----------------------------
-if &compatible
+﻿if &compatible
   set nocompatible               " Be iMproved
 endif
 
+filetype off                  " required
+
+
 " adjust configuration for such hostile environment as windows {{{
 if has("win32") || has("win16")
-  let R_path = "c:\\program files\\r\\r-3.4.0\\bin\\x64"
-  let R_args = ['--sdi',  '--no-save',  '--quiet',  '--internet2']
-  let R_latexcmd = 'xelatex'
-  let R_start_libs = "base,stats,graphics,grDevices,utils,methods"
-  let R_show_args = 1
   source $vimruntime/mswin.vim
   set guifont=Source_Code_Pro_Medium:h12
-  set rtp+=~\vimfiles\repos\github.com\Shougo\dein.vim
+  set rtp+=~\vimfiles\bundle\Vundle.vim
   let deinpath='~\vimfiles\'
   let os = 'win32'
 elseif has("gui_macvim")
-  let R_path = '/usr/local/bin/'
-  let R_args = ['--no-save',  '--quiet']
-  let R_latexcmd = 'xelatex'
-  let R_start_libs = "base,stats,graphics,grDevices,utils,methods"
-  let R_show_args = 1
   let os = 'mac'
   set guifont=sauce\ code\ powerline\ light:h14
 else
@@ -32,127 +22,67 @@ else
   endif
 endif
 
-if os == 'mac' || os == 'linux' || os == 'Linux'
+if os == 'mac' || os == 'linux' || os == 'Linux' || os == 'Darwin'
 " set the runtime path to include vundle
   let deinpath='~/.vim/'
-  set rtp+=~/.vim/repos/github.com/Shougo/dein.vim
+  set rtp+=~/.vim/bundle/Vundle.vim
 endif
 " }}}
 "
 
-" Required:
-call dein#begin(deinpath)
+" set the runtime path to include Vundle and initialize
+call vundle#begin()
 
-  " Let dein manage dein
-  " Required:
-  call dein#add('Shougo/dein.vim')
+  " let Vundle manage Vundle, required
+  Plugin 'VundleVim/Vundle.vim'
+  Plugin 'jeaye/color_coded'
 
-  " Add or remove your plugins here:
-  call dein#add('Shougo/vimproc.vim', {
-    \ 'build': {
-    \     'windows': 'tools\\update-dll-mingw',
-    \     'cygwin': 'make -f make_cygwin.mak',
-    \     'mac': 'make -f make_mac.mak',
-    \     'linux': 'make',
-    \     'unix': 'gmake',
-    \    },
-    \ })
+  Plugin('mh21/errormarker.vim')
+  Plugin('sheerun/vim-polyglot')
 
-  call dein#add('Chiel92/vim-autoformat')
-  call dein#add('jeaye/color_coded',
-        \ {'on_ft' : ['c', 'cpp', 'h', 'hpp']})
-  call dein#add('rbtnn/rabbit-ui.vim')
-  call dein#add('majutsushi/tagbar', 
-        \ {'on_ft' : ['c', 'cpp', 'h', 'hpp']})
-  call dein#add('tpope/vim-dispatch',
-        \ {'on_ft' : ['c', 'cpp', 'h', 'hpp', 'py']})
-
-  call dein#add('miyakogi/sidepanel.vim',
-        \ {'hook_add': "
-        \   let g:sidepanel_use_rabbit_ui = 1\n
-        \   let g:sidepanel_config = {}\n
-        \   let g:sidepanel_config['nerdtree'] = {}\n
-        \   let g:sidepanel_config['tagbar'] = {}\n
-        \   let g:sidepanel_config['buffergator'] = {}\n
-        \ "})
-
-  call dein#add('mh21/errormarker.vim')
-  call dein#add('chase/vim-ansible-yaml',
-        \ {'on_ft': ['yaml']})
-  call dein#add('sheerun/vim-polyglot')
-
-  call dein#add('tpope/vim-unimpaired')
-  call dein#add('tpope/vim-repeat',
-        \{'on_i': 1})
-  call dein#add('tpope/vim-commentary',
-        \{'on_i': 1})
+  Plugin('tpope/vim-commentary')
 
   "call dein#add('editorconfig/editorconfig-vim')
   "call dein#add('matchit.zip')
-  call dein#add('scrooloose/nerdtree')
+  Plugin('scrooloose/nerdtree')
   "call dein#add('scrooloose/nerdcommenter')
-  call dein#add('ntpeters/vim-better-whitespace')
+  Plugin('ntpeters/vim-better-whitespace')
   "call dein#add('ctrlpvim/ctrlp.vim')
-  call dein#add('coot/atp_vim',
-        \ {'on_ft': ['tex']})
-  call dein#add('airblade/vim-gitgutter')
-  call dein#add('bling/vim-airline')
-  call dein#add('tpope/vim-fugitive')
-  call dein#add('scrooloose/syntastic',
-        \ {'on_ft': ['R', 'cpp', 'py', 'java', 'h', 'hpp', 'c']})
-  call dein#add('jalvesaq/Nvim-R',
-        \ {'on_ft': ['r', 'rmd', 'rnoweb']} )
-  call dein#add('mllg/vim-devtools-plugin',
-        \ {'on_ft': ['r', 'rmd', 'rnoweb']} )
-  call dein#add('pgdouyon/vim-accio',
-        \ {'on_ft': ['c', 'cpp', 'java']} )
-  call dein#add('nlknguyen/vim-maven-syntax',
-        \ {'on_ft': ['xml']} )
-  call dein#add('tpope/vim-sensible')
-  call dein#add('Shougo/neomru.vim')
-  call dein#add('mhinz/vim-signify')
-  call dein#add('luochen1990/rainbow')
-  call dein#add('klen/python-mode',
-        \ {'on_ft': ['py']} )
-  call dein#add('vim-pandoc/vim-pandoc')
-  call dein#add('vim-pandoc/vim-pandoc-syntax')
-  call dein#add('vim-pandoc/vim-rmarkdown',
-        \ {'on_ft': ['Rmd']} )
-  call dein#add('JamshedVesuna/vim-markdown-preview',
-        \ {'on_ft': ['Rmd', 'md']} )
+  Plugin('coot/atp_vim')
+  Plugin('airblade/vim-gitgutter')
+  Plugin('bling/vim-airline')
+  Plugin('tpope/vim-fugitive')
+  Plugin('scrooloose/syntastic')
+  Plugin('pgdouyon/vim-accio')
+  Plugin('nlknguyen/vim-maven-syntax')
+  Plugin('tpope/vim-sensible')
+  Plugin('Shougo/neomru.vim')
+  Plugin('mhinz/vim-signify')
+  Plugin('luochen1990/rainbow')
+  Plugin('klen/python-mode')
+  Plugin('vim-pandoc/vim-pandoc')
+  Plugin('vim-pandoc/vim-pandoc-syntax')
+  "Plugin('JamshedVesuna/vim-markdown-preview')
   " lazy load on insert mode
-  call dein#add('Shougo/deoplete.nvim',
-        \{'on_i': 1})
 
-  call dein#add('justmao945/vim-clang',
-      \{'on_ft': ['c', 'cpp']})
-  call dein#add('vim-scripts/c.vim',
-        \ {'on_ft': ['c', 'cpp', 'h', 'hpp']} )
-  call dein#add('octol/vim-cpp-enhanced-highlight',
-        \ {'on_ft': ['c', 'cpp', 'h', 'hpp']} )
+  Plugin('justmao945/vim-clang')
+  Plugin('vim-scripts/c.vim')
+  Plugin('octol/vim-cpp-enhanced-highlight')
 
-  call dein#add('cakebaker/scss-syntax.vim')
-  call dein#add('idanarye/vim-merginal')
-  call dein#add('crusoexia/vim-monokai')
-  call dein#add('hashivim/vim-terraform',
-        \ {'on_ft': ['tf', 'tf.json']} )
+  Plugin('idanarye/vim-merginal')
+  Plugin('sickill/vim-monokai')
+  Plugin 'fatih/vim-go'
+  Plugin 'hashivim/vim-terraform'
+  Plugin 'scrooloose/nerdcommenter'
 
   "call dein#add('Konfekt/FastFold')
 
 
 " Required:
-call dein#end()
+call vundle#end()
 
 " Required:
 filetype plugin indent on
-
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
-
-"End dein Scripts-------------------------
-
 
 filetype off                  " required
 
@@ -455,6 +385,30 @@ let g:rainbow_active = 1
 let g:sidepanel_pos = "right"
 " Set width if neccesary (default: 32)
 let g:sidepanel_width = 26
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
 
 " clang error message
 set errorformat=%f:%l:%c:\ %t%s:\ %m
