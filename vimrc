@@ -10,7 +10,6 @@ if has("win32") || has("win16")
   source $vimruntime/mswin.vim
   set guifont=Source_Code_Pro_Medium:h12
   set rtp+=~\vimfiles\bundle\Vundle.vim
-  let deinpath='~\vimfiles\'
   let os = 'win32'
 elseif has("gui_macvim")
   let os = 'mac'
@@ -24,7 +23,6 @@ endif
 
 if os == 'mac' || os == 'linux' || os == 'Linux' || os == 'Darwin'
 " set the runtime path to include vundle
-  let deinpath='~/.vim/'
   set rtp+=~/.vim/bundle/Vundle.vim
 endif
 " }}}
