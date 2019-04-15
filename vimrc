@@ -42,7 +42,6 @@ call vundle#begin()
 
   Plugin('tpope/vim-commentary')
 
-  "call dein#add('editorconfig/editorconfig-vim')
   "call dein#add('matchit.zip')
   Plugin('scrooloose/nerdtree')
   "call dein#add('scrooloose/nerdcommenter')
@@ -74,6 +73,7 @@ call vundle#begin()
   Plugin 'fatih/vim-go'
   Plugin 'hashivim/vim-terraform'
   Plugin 'scrooloose/nerdcommenter'
+  Plugin 'editorconfig/editorconfig-vim'
 
   "call dein#add('Konfekt/FastFold')
 
