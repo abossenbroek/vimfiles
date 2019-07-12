@@ -42,7 +42,6 @@ call vundle#begin()
 
   "call dein#add('matchit.zip')
   Plugin('scrooloose/nerdtree')
-  "call dein#add('scrooloose/nerdcommenter')
   Plugin('ntpeters/vim-better-whitespace')
   "call dein#add('ctrlpvim/ctrlp.vim')
   Plugin('coot/atp_vim')
@@ -59,6 +58,7 @@ call vundle#begin()
   Plugin('klen/python-mode')
   Plugin('vim-pandoc/vim-pandoc')
   Plugin('vim-pandoc/vim-pandoc-syntax')
+  Plugin('python/black')
   "Plugin('JamshedVesuna/vim-markdown-preview')
   " lazy load on insert mode
 
@@ -394,10 +394,10 @@ let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
 
 " Set a language to use its alternate delimiters by default
-let g:NERDAltDelims_java = 1
+" let g:NERDAltDelims_java = 1
 
 " Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
 
 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines = 1
