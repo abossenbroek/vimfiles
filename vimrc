@@ -424,6 +424,8 @@ autocmd QuickFixCmdPost    l* nested lwindow
 
 map <Leader>j :make<CR>
 
+autocmd BufWritePre *.py execute ':Black'
+
 "TODO: comment
 
 set exrc
