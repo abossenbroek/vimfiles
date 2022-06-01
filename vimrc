@@ -27,16 +27,18 @@ if os == 'mac' || os == 'linux' || os == 'Linux' || os == 'Darwin'
 endif
 " }}}
 "
+    
+let g:polyglot_disabled = ['latex']
 
 " set the runtime path to include Vundle and initialize
 call vundle#begin()
 
   " let Vundle manage Vundle, required
   Plugin 'VundleVim/Vundle.vim'
-  Plugin 'jeaye/color_coded'
+  "Plugin 'jeaye/color_coded'
 
-  Plugin('mh21/errormarker.vim')
   Plugin('sheerun/vim-polyglot')
+  Plugin('mh21/errormarker.vim')
 
   Plugin('tpope/vim-commentary')
 
@@ -47,23 +49,21 @@ call vundle#begin()
   Plugin('airblade/vim-gitgutter')
   Plugin('bling/vim-airline')
   Plugin('tpope/vim-fugitive')
-  Plugin('scrooloose/syntastic')
   Plugin('pgdouyon/vim-accio')
   Plugin('nlknguyen/vim-maven-syntax')
   Plugin('tpope/vim-sensible')
   Plugin('Shougo/neomru.vim')
   Plugin('mhinz/vim-signify')
   Plugin('luochen1990/rainbow')
-  Plugin('klen/python-mode')
+  Plugin 'dense-analysis/ale'
   Plugin('vim-pandoc/vim-pandoc')
   Plugin('vim-pandoc/vim-pandoc-syntax')
   Plugin('python/black')
+  Plugin('rust-lang/rust.vim')
+  Plugin 'elixir-editors/vim-elixir'
+
   "Plugin('JamshedVesuna/vim-markdown-preview')
   " lazy load on insert mode
-
-  Plugin('justmao945/vim-clang')
-  Plugin('vim-scripts/c.vim')
-  Plugin('octol/vim-cpp-enhanced-highlight')
 
   Plugin('idanarye/vim-merginal')
   Plugin('sickill/vim-monokai')
@@ -117,32 +117,18 @@ endif
 
 " Settings for fugitive {{{
 nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gc :Git commit<cr>
 nnoremap <leader>gw :Gwrite<cr>
-nnoremap <leader>gh :Gpush<cr>
+nnoremap <leader>gh :Git push<cr>
 nnoremap <leader>gl :Gpull<cr>
 " }}}
 
 set autoindent
 set number
 
-" Settings for syntastic {{{
-if exists(':SyntasticInfo')
-  set statusline+=%#warningmsg#
-  set statusline+=%{fugitive#statusline()}
-  set statusline+=%{SyntasticStatuslineFlag()}
-  set statusline+=%*
+" ALE settings {{
+let b:ale_linters = ['flake8', 'pylint', 'hadolint']
 
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
-  " Configuration for lintr {{{
-  let g:syntastic_enable_r_lintr_checker = 1
-  let g:syntastic_r_checkers = ['lintr']
-  let g:syntastic_loc_list_height=5
-  " }}}
-endif
 " }}}
 
 " Kite settings {{{
@@ -268,8 +254,19 @@ if has("autocmd")
 		let g:DoxygenToolkit_authorName="Anton Bossenbroek"
 		let g:DoxygenToolkit_licenseTag="My own license\<enter>"
 		let g:DoxygenToolkit_commentType = "C++"
-	augroup END
 
+
+
+    augroup Python
+      au!
+      "au BufNewFile *.py read ~/util/templates/Python.py
+      " see also :help smartindent , cinwords
+      au FileType python set autoindent smartindent et sts=4 sw=4 tw=79 fo=croq fileformat=unix
+      " turn off the C preprocessor indenting
+      " (allow comments in Python to be indented properly)
+      "au FileType python inoremap # X^H#
+      "au FileType python set foldenable foldmethod=indent
+    augroup END
 
   highlight ExtraWhitespace ctermbg=red guibg=red
   match ExtraWhitespace /\s\+$/
@@ -296,6 +293,11 @@ if exists(':IndentGuidesToggle')
   :IndentGuidesToggle
 endif
 " }}}
+
+if exists(':KiteHelp')
+ set completeopt-=preview   " Hide the documentation preview window
+endif
+
 
 if exists(':SortScalaImports')
 endif
@@ -428,6 +430,12 @@ autocmd QuickFixCmdPost    l* nested lwindow
 map <Leader>j :make<CR>
 
 autocmd BufWritePre *.py execute ':Black'
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
 
 "TODO: comment
 
