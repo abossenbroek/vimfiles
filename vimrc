@@ -44,8 +44,6 @@ call vundle#begin()
   Plugin('scrooloose/nerdtree')
   Plugin('ntpeters/vim-better-whitespace')
   "call dein#add('ctrlpvim/ctrlp.vim')
-  Plugin('lervag/vimtex')
-
   Plugin('airblade/vim-gitgutter')
   Plugin('bling/vim-airline')
   Plugin('tpope/vim-fugitive')
@@ -147,6 +145,10 @@ if exists(':SyntasticInfo')
 endif
 " }}}
 
+" Kite settings {{{
+set statusline+=%{kite#statusline()}
+nmap <silent> <buffer> gK <Plug>(kite-docs)
+" }}}
 
 " Folding {{{
 set foldenable
@@ -173,9 +175,9 @@ set history=100		" keep 100 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
-if os == 'Mac' || os == 'Linux'
+if os == 'mac' || os == 'Linux'
   set tags+=~/.vim/systags
-  set backupdir=~/.vim/backup,~/tmp
+  set backupdir=~/.vim/backup
 elseif os == 'Win32'
   set tags+=~/vimfiles/systags
   set backupdir=~/vimfiles/backup
@@ -231,7 +233,7 @@ if has("autocmd")
 		:nmap <C-S-F> :setlocal spell spelllang=fr <CR>
 		:nmap <C-S-S> :setlocal nospell <CR>
 
-    if os == 'Mac'
+    if os == 'mac'
       let g:Tex_CompileRule_pdf="latexmk -pdf $* && /usr/bin/open %:r.pdf"
       let g:Tex_DefaultTargetValue="pdf"
       let g:TreatMacViewerAsUNIX=1
